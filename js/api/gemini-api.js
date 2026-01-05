@@ -6,9 +6,12 @@ const GeminiAPI = {
     // API 키 확인
     checkApiKey() {
         if (!CONFIG.apiKeys.gemini) {
-            Helpers.showToast('Gemini API 키를 설정해주세요.', 'error');
             this.promptForApiKey();
-            return false;
+            // 프롬프트 후 다시 확인
+            if (!CONFIG.apiKeys.gemini) {
+                Helpers.showToast('Gemini API 키가 필요합니다.', 'error');
+                return false;
+            }
         }
         return true;
     },
