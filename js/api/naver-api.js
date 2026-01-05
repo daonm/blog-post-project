@@ -36,11 +36,7 @@ const NaverAPI = {
         if (!this.checkApiKey()) return null;
 
         try {
-            // 주의: CORS 문제로 인해 프록시 서버가 필요할 수 있습니다
-            // 여기서는 데모 데이터를 반환합니다
-
-            // 실제 API 호출 코드 (프록시 서버 필요)
-            /*
+            // 실제 API 호출
             const response = await fetch(
                 `${CONFIG.api.naverSearch}?query=${encodeURIComponent(keyword)}&display=10&start=1&sort=sim`,
                 {
@@ -50,20 +46,24 @@ const NaverAPI = {
                     }
                 }
             );
-            
+
             if (!response.ok) {
+                if (response.status === 401) throw new Error('네이버 API 키가 올바르지 않습니다.');
+                if (response.status === 403) throw new Error('네이버 API 권한이 없거나 CORS 오류가 발생했습니다.');
                 throw new Error(`API 요청 실패: ${response.status}`);
             }
-            
+
             const data = await response.json();
             return this.analyzeSearchResults(keyword, data);
-            */
-
-            // 데모 데이터 반환
-            return this.generateDemoAnalysis(keyword);
         } catch (error) {
             console.error('Naver API 오류:', error);
-            Helpers.showToast('키워드 분석에 실패했습니다.', 'error');
+
+            // CORS 오류인 경우 안내 메시지 강화
+            if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
+                Helpers.showToast('CORS 보안 정책으로 인해 브라우저에서 직접 호출이 차단되었습니다. "Allow CORS" 확장 프로그램을 사용하시거나 서버 환경이 필요합니다.', 'warning', 7000);
+            } else {
+                Helpers.showToast(`키워드 분석 실패: ${error.message}`, 'error');
+            }
             return null;
         }
     },

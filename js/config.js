@@ -5,7 +5,7 @@
 const CONFIG = {
     // API 엔드포인트
     api: {
-        gemini: 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent',
+        gemini: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
         dalle: 'https://api.openai.com/v1/images/generations',
         naverSearch: 'https://openapi.naver.com/v1/search/blog.json'
     },
