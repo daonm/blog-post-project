@@ -183,21 +183,24 @@ ${input}
     async generatePost(title, style, options = {}) {
         const stylePrompt = CONFIG.writingStyles[style].prompt;
 
-        let prompt = `주제: ${title}
+        let prompt = `당신은 전문 블로거입니다. 다음 주제에 대해 독자에게 유익하고 흥미로운 블로그 포스트를 작성해주세요.
+
+주제: ${title}
 
 스타일: ${stylePrompt}
 
 요구사항:
-- 800-1000자 분량
-- 서론, 본론, 결론 구조
-- 실용적인 정보 제공
-- HTML 형식 (<article> 태그 사용)`;
+- 분량: 1000자 내외로 상세하게 작성
+- 구조: 제목, 서론, 본론(최소 3개 섹션), 결론(마무리 요약 및 인사)을 포함
+- **중요**: 반드시 결론까지 완벽하게 작성하고 글을 마무리하세요. 중간에 끊기거나 '...'으로 끝내지 마세요.
+- 형식: HTML 형식 (<article> 태그 사용, <h2>, <h3>, <p>, <ul>, <li> 등 활용)
+- 가독성을 위해 적절한 문단 나누기와 강조(<strong>)를 사용하세요.`;
 
         if (options.additionalRequests) {
-            prompt += `\n\n추가: ${options.additionalRequests}`;
+            prompt += `\n\n추가 요청사항: ${options.additionalRequests}`;
         }
 
-        return await this.generateText(prompt, { maxTokens: 4096 });
+        return await this.generateText(prompt, { maxTokens: 8192 });
     },
 
     // SNS 홍보 문구 생성

@@ -66,11 +66,28 @@ class PostCreator {
 
             this.generatedPost = postHTML;
 
-            // 태그 생성 임시 비활성화 (MAX_TOKENS 문제로 인해)
-            // const tags = await GeminiAPI.generateTags(postHTML);
-            // if (tags) {
-            //     this.generatedTags = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
-            // }
+            // 태그 생성 복구
+            const tags = await GeminiAPI.generateTags(postHTML);
+            if (tags) {
+                this.generatedTags = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+            }
+
+            // 이미지 생성 처리
+            if (options.includeImages) {
+                Helpers.showLoading('이미지 생성 중...');
+                try {
+                    if (generateMainImage) {
+                        const mainImage = await ImagenAPI.generateBlogImage(title, 'main');
+                        if (mainImage) {
+                            this.generatedPost = `<div class="main-image"><img src="${mainImage.url}" alt="${title}"></div>\n` + this.generatedPost;
+                        }
+                    }
+                    // 서브 이미지는 복잡하므로 여기서는 메인 이미지만 우선 처리
+                } catch (imgError) {
+                    console.error('이미지 생성 중 오류:', imgError);
+                    Helpers.showToast('이미지 생성에 실패했습니다. (텍스트는 생성됨)', 'warning');
+                }
+            }
 
             Helpers.hideLoading();
 
@@ -94,6 +111,11 @@ class PostCreator {
                 summary: summary,
                 fullContent: postHTML
             };
+
+            // SNS 모듈이 있으면 데이터 새로고침
+            if (window.snsMarketing) {
+                window.snsMarketing.loadLastPost();
+            }
 
             Helpers.showToast('포스트가 생성되었습니다!', 'success');
         } catch (error) {

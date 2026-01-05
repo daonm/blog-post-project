@@ -111,6 +111,11 @@ class BloggingProApp {
             }
         });
 
+        // 탭 전환 시 필요한 모듈 데이터 새로고침
+        if (tabName === 'sns-marketing' && window.snsMarketing) {
+            window.snsMarketing.loadLastPost();
+        }
+
         STATE.currentTab = tabName;
     }
 
