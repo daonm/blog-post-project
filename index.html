@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>올인원 블로깅 프로 - All-in-One Blogging Pro</title>
+    <meta name="description" content="블로그 운영의 모든 것을 자동화하는 통합 솔루션">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z" stroke="url(#gradient)" stroke-width="2" fill="url(#gradient-fill)"/>
+                        <circle cx="20" cy="20" r="6" fill="white"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="5" y1="5" x2="35" y2="35">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                            <linearGradient id="gradient-fill" x1="5" y1="5" x2="35" y2="35">
+                                <stop offset="0%" stop-color="#667eea" stop-opacity="0.2"/>
+                                <stop offset="100%" stop-color="#764ba2" stop-opacity="0.3"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <h1 class="logo-text">블로깅 프로</h1>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <button class="nav-button active" data-tab="topic-generator">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>주제 발굴</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-button" data-tab="keyword-analyzer">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <span>키워드 분석</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-button" data-tab="post-creator">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                        <span>포스트 생성</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-button" data-tab="image-generator">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>이미지 생성</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-button" data-tab="sns-marketing">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5z"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                        <span>소셜 홍보</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Topic Generator Section -->
+            <section id="topic-generator" class="section active">
+                <div class="section-header">
+                    <h2 class="section-title">주제 아이디어 엔진</h2>
+                    <p class="section-description">5가지 전문 분석 모델로 완벽한 블로그 주제를 찾아보세요</p>
+                </div>
+
+                <div class="topic-models">
+                    <!-- Model 1: Category Based -->
+                    <div class="model-card">
+                        <div class="model-header">
+                            <div class="model-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                            <h3 class="model-title">카테고리별 추천</h3>
+                        </div>
+                        <p class="model-description">선택한 분야의 최신 트렌드를 기반으로 주제를 제안합니다</p>
+                        <div class="form-group">
+                            <label class="form-label">카테고리 선택</label>
+                            <select class="form-select" id="categorySelect">
+                                <option value="">카테고리를 선택하세요</option>
+                                <option value="it">IT/테크</option>
+                                <option value="health">건강/웰빙</option>
+                                <option value="finance">재테크/금융</option>
+                                <option value="lifestyle">라이프스타일</option>
+                                <option value="food">요리/맛집</option>
+                                <option value="travel">여행</option>
+                                <option value="education">교육/학습</option>
+                                <option value="business">비즈니스/창업</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" id="generateCategoryTopics">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            주제 생성
+                        </button>
+                    </div>
+
+                    <!-- Model 2: E-EAT Based -->
+                    <div class="model-card">
+                        <div class="model-header">
+                            <div class="model-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                            </div>
+                            <h3 class="model-title">E-EAT 기반 추천</h3>
+                        </div>
+                        <p class="model-description">구글 SEO 최적화를 위한 전문성 있는 심층 주제</p>
+                        <div class="form-group">
+                            <label class="form-label">전문 분야</label>
+                            <input type="text" class="form-input" id="expertiseField" placeholder="예: 웹 개발, 영양학, 투자 전략">
+                        </div>
+                        <button class="btn btn-primary" id="generateEEATTopics">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            주제 생성
+                        </button>
+                    </div>
+
+                    <!-- Model 3: Evergreen Content -->
+                    <div class="model-card">
+                        <div class="model-header">
+                            <div class="model-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                            <h3 class="model-title">에버그린 콘텐츠</h3>
+                        </div>
+                        <p class="model-description">시간이 지나도 가치가 변하지 않는 스테디셀러 주제</p>
+                        <div class="form-group">
+                            <label class="form-label">관심 주제</label>
+                            <input type="text" class="form-input" id="evergreenTopic" placeholder="예: 역사, 과학 원리, 기초 가이드">
+                        </div>
+                        <button class="btn btn-primary" id="generateEvergreenTopics">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            주제 생성
+                        </button>
+                    </div>
+
+                    <!-- Model 4: Long-tail Keywords -->
+                    <div class="model-card">
+                        <div class="model-header">
+                            <div class="model-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"/>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                            <h3 class="model-title">롱테일 키워드</h3>
+                        </div>
+                        <p class="model-description">경쟁이 낮고 검색 의도가 명확한 세부 주제</p>
+                        <div class="form-group">
+                            <label class="form-label">기본 키워드</label>
+                            <input type="text" class="form-input" id="longtailKeyword" placeholder="예: 다이어트, 프로그래밍, 재테크">
+                        </div>
+                        <button class="btn btn-primary" id="generateLongtailTopics">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            주제 생성
+                        </button>
+                    </div>
+
+                    <!-- Model 5: File/Memo Based -->
+                    <div class="model-card">
+                        <div class="model-header">
+                            <div class="model-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                                    <polyline points="13 2 13 9 20 9"/>
+                                </svg>
+                            </div>
+                            <h3 class="model-title">메모/파일 기반</h3>
+                        </div>
+                        <p class="model-description">메모, PDF, 강의 노트를 블로그 글로 재구성</p>
+                        <div class="form-group">
+                            <label class="form-label">파일 업로드 또는 메모 입력</label>
+                            <textarea class="form-textarea" id="memoContent" rows="4" placeholder="메모를 입력하거나 파일을 업로드하세요..."></textarea>
+                            <input type="file" class="form-file" id="fileUpload" accept=".txt,.pdf,.doc,.docx">
+                        </div>
+                        <button class="btn btn-primary" id="generateMemoTopics">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            주제 생성
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Area -->
+                <div class="results-area" id="topicResults" style="display: none;">
+                    <div class="results-header">
+                        <h3 class="results-title">생성된 주제</h3>
+                        <button class="btn btn-secondary btn-sm" id="clearTopicResults">초기화</button>
+                    </div>
+                    <div class="results-content" id="topicResultsContent"></div>
+                </div>
+            </section>
+
+            <!-- Keyword Analyzer Section -->
+            <section id="keyword-analyzer" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">키워드 파이터</h2>
+                    <p class="section-description">네이버 검색 데이터로 최적의 키워드를 분석하세요</p>
+                </div>
+
+                <div class="keyword-input-area">
+                    <div class="form-group">
+                        <label class="form-label">키워드 입력</label>
+                        <div class="input-with-button">
+                            <input type="text" class="form-input" id="keywordInput" placeholder="분석할 키워드를 입력하세요">
+                            <button class="btn btn-primary" id="analyzeKeyword">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="M21 21l-4.35-4.35"/>
+                                </svg>
+                                분석
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-area" id="keywordResults" style="display: none;">
+                    <div class="keyword-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">월간 검색량</div>
+                            <div class="stat-value" id="monthlySearches">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">경쟁도</div>
+                            <div class="stat-value" id="competition">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">추천 점수</div>
+                            <div class="stat-value" id="recommendScore">-</div>
+                        </div>
+                    </div>
+
+                    <div class="seo-strategy" id="seoStrategy"></div>
+
+                    <div class="related-keywords" id="relatedKeywords"></div>
+
+                    <button class="btn btn-primary" id="sendToPostCreator">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                        포스트 생성으로 전달
+                    </button>
+                </div>
+            </section>
+
+            <!-- Post Creator Section -->
+            <section id="post-creator" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">포스트 생성 엔진</h2>
+                    <p class="section-description">AI가 고품질 블로그 글을 자동으로 작성합니다</p>
+                </div>
+
+                <div class="post-settings">
+                    <div class="form-group">
+                        <label class="form-label">기사 제목 (주제)</label>
+                        <input type="text" class="form-input" id="postTitle" placeholder="블로그 글의 주제를 입력하세요">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">추가 요청 사항</label>
+                        <textarea class="form-textarea" id="additionalRequests" rows="3" placeholder="특별히 포함하고 싶은 내용이나 스타일을 입력하세요..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">컬러 테마</label>
+                        <div class="color-themes">
+                            <button class="theme-btn active" data-theme="purple" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></button>
+                            <button class="theme-btn" data-theme="pink" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></button>
+                            <button class="theme-btn" data-theme="blue" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></button>
+                            <button class="theme-btn" data-theme="orange" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></button>
+                            <button class="theme-btn" data-theme="green" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></button>
+                            <button class="theme-btn" data-theme="sunset" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);"></button>
+                            <button class="theme-btn" data-theme="ocean" style="background: linear-gradient(135deg, #2e3192 0%, #1bffff 100%);"></button>
+                        </div>
+                    </div>
+
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="generateMainImage">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-text">대표 이미지 생성</span>
+                            </label>
+                        </div>
+                        <div class="option-card">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="generateSubImages">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-text">본문 서브 이미지 (최대 3개)</span>
+                            </label>
+                        </div>
+                        <div class="option-card">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="addInteractive">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-text">인터랙티브 요소 추가</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">글쓰기 스타일</label>
+                        <div class="style-selector">
+                            <button class="style-btn active" data-style="friendly">
+                                <div class="style-icon">😊</div>
+                                <div class="style-name">친근형</div>
+                                <div class="style-desc">감정 표현, 개인적 경험, 대화체</div>
+                            </button>
+                            <button class="style-btn" data-style="expert">
+                                <div class="style-icon">🎓</div>
+                                <div class="style-name">전문가형</div>
+                                <div class="style-desc">논리적 구조, 고급 어휘, 신뢰감</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg" id="generatePost">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        포스트 생성
+                    </button>
+                </div>
+
+                <div class="results-area" id="postResults" style="display: none;">
+                    <div class="results-header">
+                        <h3 class="results-title">생성된 포스트</h3>
+                        <div class="results-actions">
+                            <button class="btn btn-secondary btn-sm" id="copyHTML">HTML 복사</button>
+                            <button class="btn btn-secondary btn-sm" id="copyInteractive">인터랙티브 코드 복사</button>
+                            <button class="btn btn-secondary btn-sm" id="previewPost">미리보기</button>
+                        </div>
+                    </div>
+                    <div class="post-preview" id="postPreview"></div>
+                    <div class="post-tags">
+                        <h4 class="tags-title">추천 태그</h4>
+                        <div class="tags-list" id="recommendedTags"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Image Generator Section -->
+            <section id="image-generator" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">디자인 및 미디어</h2>
+                    <p class="section-description">AI로 고품질 블로그 이미지를 생성하고 편집하세요</p>
+                </div>
+
+                <div class="image-tabs">
+                    <button class="tab-btn active" data-subtab="image-gen">이미지 생성</button>
+                    <button class="tab-btn" data-subtab="thumbnail-maker">썸네일 제작</button>
+                </div>
+
+                <!-- Image Generation Sub-section -->
+                <div class="subtab-content active" id="image-gen">
+                    <div class="form-group">
+                        <label class="form-label">이미지 프롬프트</label>
+                        <textarea class="form-textarea" id="imagePrompt" rows="3" placeholder="생성하고 싶은 이미지를 설명하세요..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이미지 스타일</label>
+                        <select class="form-select" id="imageStyle">
+                            <option value="realistic">사실적</option>
+                            <option value="illustration">일러스트</option>
+                            <option value="minimal">미니멀</option>
+                            <option value="artistic">예술적</option>
+                            <option value="cartoon">카툰</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이미지 크기</label>
+                        <select class="form-select" id="imageSize">
+                            <option value="1024x1024">정사각형 (1024x1024)</option>
+                            <option value="1792x1024">가로형 (1792x1024)</option>
+                            <option value="1024x1792">세로형 (1024x1792)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" id="generateImage">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        이미지 생성
+                    </button>
+
+                    <div class="image-gallery" id="imageGallery"></div>
+                </div>
+
+                <!-- Thumbnail Maker Sub-section -->
+                <div class="subtab-content" id="thumbnail-maker">
+                    <div class="thumbnail-editor">
+                        <div class="editor-left">
+                            <div class="form-group">
+                                <label class="form-label">배경 이미지</label>
+                                <input type="file" class="form-file" id="thumbnailBgImage" accept="image/*">
+                                <button class="btn btn-secondary btn-sm" id="useGeneratedImage">생성된 이미지 사용</button>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">텍스트 입력 (/ 로 줄바꿈)</label>
+                                <textarea class="form-textarea" id="thumbnailText" rows="3" placeholder="예: 블로그 성공 비법/완벽 가이드"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">글꼴</label>
+                                <select class="form-select" id="thumbnailFont">
+                                    <option value="Noto Sans KR">Noto Sans KR</option>
+                                    <option value="Inter">Inter</option>
+                                    <option value="Arial">Arial</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">글자 색상</label>
+                                    <input type="color" class="form-color" id="thumbnailTextColor" value="#ffffff">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">외곽선 색상</label>
+                                    <input type="color" class="form-color" id="thumbnailStrokeColor" value="#000000">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">글자 크기</label>
+                                    <input type="range" class="form-range" id="thumbnailFontSize" min="20" max="120" value="60">
+                                    <span class="range-value" id="fontSizeValue">60px</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">외곽선 두께</label>
+                                    <input type="range" class="form-range" id="thumbnailStrokeWidth" min="0" max="10" value="3">
+                                    <span class="range-value" id="strokeWidthValue">3px</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">비율</label>
+                                <select class="form-select" id="thumbnailRatio">
+                                    <option value="16:9">16:9 (유튜브)</option>
+                                    <option value="1:1">1:1 (인스타그램)</option>
+                                    <option value="4:3">4:3 (일반)</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary" id="downloadThumbnail">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                썸네일 다운로드
+                            </button>
+                        </div>
+
+                        <div class="editor-right">
+                            <div class="canvas-container">
+                                <canvas id="thumbnailCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SNS Marketing Section -->
+            <section id="sns-marketing" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">소셜 미디어 홍보</h2>
+                    <p class="section-description">플랫폼별 최적화된 홍보 문구를 자동으로 생성합니다</p>
+                </div>
+
+                <div class="sns-input-area">
+                    <div class="form-group">
+                        <label class="form-label">블로그 글 제목</label>
+                        <input type="text" class="form-input" id="snsPostTitle" placeholder="홍보할 블로그 글의 제목">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">글 요약</label>
+                        <textarea class="form-textarea" id="snsPostSummary" rows="3" placeholder="블로그 글의 핵심 내용을 간단히 요약하세요..."></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" id="generateSNSContent">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5z"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        </svg>
+                        SNS 문구 생성
+                    </button>
+                </div>
+
+                <div class="results-area" id="snsResults" style="display: none;">
+                    <div class="sns-platforms">
+                        <!-- Threads/X -->
+                        <div class="platform-card">
+                            <div class="platform-header">
+                                <div class="platform-icon" style="background: linear-gradient(135deg, #1DA1F2 0%, #14171A 100%);">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="platform-name">Threads / X</h3>
+                            </div>
+                            <div class="platform-content" id="threadsContent"></div>
+                            <button class="btn btn-secondary btn-sm copy-btn" data-target="threadsContent">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                </svg>
+                                복사
+                            </button>
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="platform-card">
+                            <div class="platform-header">
+                                <div class="platform-icon" style="background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="platform-name">Instagram</h3>
+                            </div>
+                            <div class="platform-content" id="instagramContent"></div>
+                            <button class="btn btn-secondary btn-sm copy-btn" data-target="instagramContent">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                </svg>
+                                복사
+                            </button>
+                        </div>
+
+                        <!-- Facebook -->
+                        <div class="platform-card">
+                            <div class="platform-header">
+                                <div class="platform-icon" style="background: linear-gradient(135deg, #3b5998 0%, #8b9dc3 100%);">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="platform-name">Facebook</h3>
+                            </div>
+                            <div class="platform-content" id="facebookContent"></div>
+                            <button class="btn btn-secondary btn-sm copy-btn" data-target="facebookContent">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                </svg>
+                                복사
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2026 올인원 블로깅 프로. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">생성 중...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/api/gemini-api.js"></script>
+    <script src="js/api/dalle-api.js"></script>
+    <script src="js/api/naver-api.js"></script>
+    <script src="js/topic-generator.js"></script>
+    <script src="js/keyword-analyzer.js"></script>
+    <script src="js/post-creator.js"></script>
+    <script src="js/image-generator.js"></script>
+    <script src="js/thumbnail-maker.js"></script>
+    <script src="js/sns-marketing.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
