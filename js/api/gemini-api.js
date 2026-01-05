@@ -25,77 +25,84 @@ const GeminiAPI = {
         }
     },
 
-    // 텍스트 생성
+    // 텍스트 생성 (재시도 로직 포함)
     async generateText(prompt, options = {}) {
         if (!this.checkApiKey()) return null;
 
-        console.log('=== Gemini API 호출 시작 ===');
-        console.log('API 키:', CONFIG.apiKeys.gemini ? '설정됨' : '없음');
-        console.log('엔드포인트:', CONFIG.api.gemini);
+        const modelsToTry = [
+            'gemini-1.5-flash',
+            'gemini-1.5-flash-latest',
+            'gemini-1.5-pro',
+            'gemini-2.0-flash-exp',
+            'gemini-pro'
+        ];
 
-        try {
-            const response = await fetch(
-                `${CONFIG.api.gemini}?key=${CONFIG.apiKeys.gemini}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: options.temperature || 0.7,
-                            topK: options.topK || 40,
-                            topP: options.topP || 0.95,
-                            maxOutputTokens: options.maxTokens || 8192, // 2048에서 8192로 증가
-                        }
-                    })
+        let lastError = null;
+
+        for (const modelName of modelsToTry) {
+            console.log(`=== Gemini API 호출 시도 (${modelName}) ===`);
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent`;
+
+            try {
+                const response = await fetch(
+                    `${endpoint}?key=${CONFIG.apiKeys.gemini}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: prompt
+                                }]
+                            }],
+                            generationConfig: {
+                                temperature: options.temperature || 0.7,
+                                topK: options.topK || 40,
+                                topP: options.topP || 0.95,
+                                maxOutputTokens: options.maxTokens || 8192,
+                            }
+                        })
+                    }
+                );
+
+                console.log(`응답 상태 (${modelName}):`, response.status);
+
+                if (response.status === 404) {
+                    console.warn(`⚠️ 모델 ${modelName}을 찾을 수 없습니다. 다음 모델로 재시도합니다.`);
+                    continue;
                 }
-            );
 
-            console.log('응답 상태:', response.status);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error(`API 오류 응답 (${modelName}):`, errorData);
+                    throw new Error(`API 요청 실패: ${response.status} - ${JSON.stringify(errorData)}`);
+                }
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error('API 오류 응답:', errorData);
-                throw new Error(`API 요청 실패: ${response.status} - ${JSON.stringify(errorData)}`);
+                const data = await response.json();
+                console.log(`응답 데이터 (${modelName}):`, data);
+
+                if (data.candidates && data.candidates.length > 0) {
+                    const candidate = data.candidates[0];
+                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+                        console.log(`=== API 호출 성공 (${modelName}) ===`);
+                        return candidate.content.parts[0].text;
+                    }
+                }
+
+                throw new Error('응답 데이터 구조가 올바르지 않습니다.');
+
+            } catch (error) {
+                console.error(`=== Gemini API 오류 (${modelName}) ===`, error);
+                lastError = error;
+                // 404가 아닌 다른 오류(네트워크 등)면 루프 중단할 수도 있지만, 우선 다음 모델 시도
+                continue;
             }
-
-            const data = await response.json();
-            console.log('응답 데이터:', data);
-
-            if (data.candidates && data.candidates.length > 0) {
-                const candidate = data.candidates[0];
-
-                // MAX_TOKENS로 잘린 경우에도 처리
-                if (candidate.finishReason === 'MAX_TOKENS') {
-                    console.warn('⚠️ 응답이 MAX_TOKENS로 잘렸습니다. 부분 응답을 반환합니다.');
-                }
-
-                if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
-                    console.log('=== API 호출 성공 ===');
-                    return candidate.content.parts[0].text;
-                }
-
-                // parts가 없지만 content가 있는 경우 (일부 응답 형식)
-                if (candidate.content && candidate.content.text) {
-                    console.log('=== API 호출 성공 (대체 형식) ===');
-                    return candidate.content.text;
-                }
-            }
-
-            console.error('응답 구조 오류:', JSON.stringify(data, null, 2));
-            throw new Error('응답 데이터가 올바르지 않습니다.');
-        } catch (error) {
-            console.error('=== Gemini API 오류 ===');
-            console.error('오류 상세:', error);
-            Helpers.showToast(`텍스트 생성 실패: ${error.message}`, 'error');
-            return null;
         }
+
+        Helpers.showToast(`텍스트 생성 실패: 모든 모델 시도 후 실패했습니다. (${lastError?.message})`, 'error');
+        return null;
     },
 
     // 주제 생성 프롬프트

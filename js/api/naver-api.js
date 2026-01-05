@@ -58,13 +58,15 @@ const NaverAPI = {
         } catch (error) {
             console.error('Naver API 오류:', error);
 
-            // CORS 오류인 경우 안내 메시지 강화
-            if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
-                Helpers.showToast('CORS 보안 정책으로 인해 브라우저에서 직접 호출이 차단되었습니다. "Allow CORS" 확장 프로그램을 사용하시거나 서버 환경이 필요합니다.', 'warning', 7000);
+            // CORS 오류 또는 네트워크 오류인 경우 데모 데이터로 폴백
+            if (error.message.includes('Failed to fetch') || error.message.includes('CORS') || error.message.includes('403')) {
+                console.warn('⚠️ CORS 보안 정책으로 인해 실제 데이터를 가져올 수 없습니다. 데모 데이터로 전환합니다.');
+                Helpers.showToast('CORS 보안 정책으로 인해 실제 데이터를 가져올 수 없어 데모 데이터로 전환합니다. (확장 프로그램 사용 권장)', 'warning', 5000);
+                return this.generateDemoAnalysis(keyword);
             } else {
                 Helpers.showToast(`키워드 분석 실패: ${error.message}`, 'error');
+                return null;
             }
-            return null;
         }
     },
 

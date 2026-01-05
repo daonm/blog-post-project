@@ -5,7 +5,7 @@
 const CONFIG = {
     // API 엔드포인트
     api: {
-        gemini: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+        // gemini: 엔드포인트는 gemini-api.js에서 동적으로 처리됨
         dalle: 'https://api.openai.com/v1/images/generations',
         naverSearch: 'https://openapi.naver.com/v1/search/blog.json'
     },
